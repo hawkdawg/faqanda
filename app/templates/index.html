@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hi, {{ user.username }}!</h1>
+    {% for question in questions%}
+    <div><p>{{ question.author.username }} says: <b>{{ question.body }}</b></p></div>
+    {% endfor %}
+    {% for answer in answers%}
+    <div><p>{{ answer.author.username }} says: <b>{{ answer.body }}</b></p></div>
+    {% endfor %}    {% endblock %}
