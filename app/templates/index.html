@@ -3,8 +3,17 @@
 {% block content %}
     <h1>Hi, {{ user.username }}!</h1>
     {% for question in questions%}
-    <div><p>{{ question.author.username }} q: <b>{{ question.body }}</b></p></div>
+    <div><p>
+        user: {{ question.author.username }}<br>
+        <b>question title: {{ question.title }}</b><br>
+        question: {{ question.body }}
+        </p>
+    </div>
     {% endfor %}
     {% for answer in answers%}
-    <div><p>{{ answer.author.username }} a: <b>{{ answer.body }}</b></p></div>
+    <div>
+        <p>
+        user: {{ answer.author.username }} answer: <b>{{ answer.body }}</b>
+        </p>
+    </div>
     {% endfor %}    {% endblock %}
