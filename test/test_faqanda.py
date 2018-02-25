@@ -80,10 +80,11 @@ class Model(unittest.TestCase):
         self.assertEqual([], q1.tags.all())
 
 
+    def test_tokens(self):
 
-
-
-
+        u = User(username='beanie', email='beanie@beanie.com')
+        token = u.get_reset_password_token()
+        #verified_u = User.verify_reset_password_token(token)
 
 
 
