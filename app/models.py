@@ -43,8 +43,8 @@ class User(UserMixin, db.Model):
             {'reset_password': self.id, 'exp': time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
-    def get_users_questions(self):
-        return Question.query.filter_by(user_id=self.id)
+    def get_users_questions(self, user_id):
+        return Question.query.filter_by(user_id=user_id)
 
 
     @staticmethod
@@ -103,6 +103,9 @@ class Question(db.Model):
     def is_tagged(self, tag):
         return self.tags.filter(
                 QuestionTag.c.tag_id == tag.tag_id).count() > 0
+
+    def get_recent_questions(limit):
+        return Question.query.order_by(Question.q_date.desc()).limit(limit).all()
 
 class QuestionComment(db.Model):
     qc_id = db.Column(db.Integer, primary_key=True)

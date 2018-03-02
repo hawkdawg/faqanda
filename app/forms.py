@@ -66,6 +66,7 @@ class ResetPasswordForm(FlaskForm):
 
 
 class AskQuestionForm(FlaskForm):
+
     question = TextAreaField('Ask a Question', validators=[
         DataRequired(),
         Length(min=8)])

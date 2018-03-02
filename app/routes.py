@@ -30,7 +30,7 @@ def index():
         flash('Your question has been posted.')
         return redirect(url_for('index')) # keep refresh from resubmitting post req
 
-    questions = current_user.get_users_questions()
+    questions = Question.get_recent_questions(limit=100)
 
     answers = [
             {
@@ -101,14 +101,7 @@ def register():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
 
-    questions = [
-            {'author': user,
-            'q_title': 'title lorem ipsum # 1',
-            'body': "1 body lorem ipsum dolor sit amet, soleat forensibus"},
-
-            {'author': user,
-            'q_title': 'test title lorm ipsum # 2',
-            'body': "2 lorem ipsum dolor sit amet, soleat forensibus signiferumque?"}]
+    questions = current_user.get_users_questions(user_id=user.id)
 
     return render_template('user.html', user=user, questions=questions)
 
