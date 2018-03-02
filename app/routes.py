@@ -24,7 +24,10 @@ def index():
 
     form = AskQuestionForm() # may need to be q and a form
     if form.validate_on_submit():
-        question = Question(body=form.question.data, author=current_user)
+        question = Question(
+                body=form.question.data,
+                title=form.question_title.data,
+                author=current_user)
         db.session.add(question)
         db.session.commit()
         flash('Your question has been posted.')
@@ -100,8 +103,7 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-
-    questions = current_user.get_users_questions(id=user.id)
+    questions = current_user.get_users_questions(user_id=user.id)
 
     return render_template('user.html', user=user, questions=questions)
 

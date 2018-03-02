@@ -8,8 +8,10 @@
             <td>
                 <a href="{{ url_for('user', username=question.author.username) }}">
                     {{ question.author.username }}
-                </a>
-                asked: <b>{{ question.body }}</b>
+                </a><br>
+                <b>asked:</b>{{ question.title}}<br>
+                <b>the details:</b>{{ question.body }}
+                <hr>
             </td>
         </tr>
     </table>
