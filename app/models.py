@@ -43,6 +43,10 @@ class User(UserMixin, db.Model):
             {'reset_password': self.id, 'exp': time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
+    def get_users_questions(self):
+        return Question.query.filter_by(user_id=self.id)
+
+
     @staticmethod
     def verify_reset_password_token(token):
         try:

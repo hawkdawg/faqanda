@@ -1,7 +1,12 @@
     <table>
         <tr valign="top">
             <td><img src="{{ question.author.avatar(24) }}"></td>
-            <td>{{ question.author.username }} asked:<br>{{ question.body }}</td>
+            <td>
+                <a href="{{ url_for('user', username=question.author.username) }}">
+                    {{ question.author.username }}
+                </a>
+                asked: <b>{{ question.body }}</b>
+            </td>
         </tr>
     </table>
 

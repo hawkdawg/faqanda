@@ -5,8 +5,8 @@ from werkzeug.urls import url_parse
 from flask_login import login_user, current_user, logout_user, login_required
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, AskQuestionForm
+from app.models import User, Question
 from app.email import send_password_reset_email
 
 @app.before_request
@@ -17,23 +17,21 @@ def before_request():
         current_user.last_visited = datetime.utcnow()
         db.session.commit()
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
 
-    questions = [
-            {
-                'author': {'username': 'beanie'},
-                'title': 'T ball q 1',
-                'body': 'What is a tennis ball?'
-            },
-            {
-                'author': {'username': 'mark'},
-                'title': 'T ball q 2',
-                'body': 'Why are there tennis balls?'
-            }
-    ]
+    form = AskQuestionForm() # may need to be q and a form
+    if form.validate_on_submit():
+        question = Question(body=form.question.data, author=current_user)
+        db.session.add(question)
+        db.session.commit()
+        flash('Your question has been posted.')
+        return redirect(url_for('index')) # keep refresh from resubmitting post req
+
+    questions = current_user.get_users_questions()
+
     answers = [
             {
                 'author': {'username': 'beanie'},
@@ -48,6 +46,7 @@ def index():
             'index.html',
             title='Home',
             questions=questions,
+            form=form,
             answers=answers)
 
 
