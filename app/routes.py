@@ -101,7 +101,7 @@ def register():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
 
-    questions = current_user.get_users_questions(user_id=user.id)
+    questions = current_user.get_users_questions(id=user.id)
 
     return render_template('user.html', user=user, questions=questions)
 

@@ -67,14 +67,14 @@ def load_user(id):
 
 QuestionTag = db.Table(
         'question_tag',
-        db.Column('q_id', db.Integer, db.ForeignKey('question.q_id')),
-        db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_id')))
+        db.Column('q_id', db.Integer, db.ForeignKey('question.id')),
+        db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')))
 
 
 class Question(db.Model):
-    q_id = db.Column(db.Integer, primary_key=True)
-    q_title = db.Column(db.String(140))
-    q_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(140))
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     deleted = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     body = db.Column(db.CLOB)
@@ -89,7 +89,7 @@ class Question(db.Model):
             lazy='dynamic')
 
     def __repr__(self):
-        return '<Question {}>'.format(self.q_title)
+        return '<Question {}>'.format(self.title)
 
 
     def tag_question(self, tag):
@@ -105,12 +105,12 @@ class Question(db.Model):
                 QuestionTag.c.tag_id == tag.tag_id).count() > 0
 
     def get_recent_questions(limit):
-        return Question.query.order_by(Question.q_date.desc()).limit(limit).all()
+        return Question.query.order_by(Question.date.desc()).limit(limit).all()
 
 class QuestionComment(db.Model):
-    qc_id = db.Column(db.Integer, primary_key=True)
-    q_id = db.Column(db.Integer, db.ForeignKey('question.q_id'))
-    qc_date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    id = db.Column(db.Integer, primary_key=True)
+    q_id = db.Column(db.Integer, db.ForeignKey('question.id'))
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     deleted = db.Column(db.Integer)
     body = db.Column(db.String(500))  # TODO determine best size
@@ -120,7 +120,7 @@ class QuestionComment(db.Model):
 
 
 class Tag(db.Model):
-    tag_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     deleted = db.Column(db.Integer)
     questions = db.relationship(
