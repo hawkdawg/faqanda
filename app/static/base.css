@@ -1,3 +1,7 @@
-.CodeMirror {
-	height: 300px;
+.simpleMDE{
+	height: 200px;
+}
+
+span {
+  display: block;
 }

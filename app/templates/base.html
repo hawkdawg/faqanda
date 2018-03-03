@@ -3,7 +3,8 @@
     <!-- Bootstrap core CSS -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -11,7 +12,6 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
         {% if title %}
@@ -25,7 +25,7 @@
 
 
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
@@ -85,7 +85,8 @@
         </div>
     </nav>
 
-
+    <hr>
+<div class="container">
         <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -111,4 +112,6 @@
 
         {% endblock %}
     </body>
+</div>
 </html>
+
