@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
+    <h1>{{ current_user.username }}</h1>
 
+<div class="well">
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
@@ -10,6 +11,12 @@
             {{ form.question_title(cols=80, rows=1) }}<br>
             {{ form.question.label }}<br>
             {{ form.question(cols=80, rows=8) }}<br>
+        <script>
+            var markdownEditor = new SimpleMDE(
+                { element: document.getElementById("{{ form.question.id }}")}
+            );
+
+        </script>
             {% for error in form.question.errors %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -17,6 +24,7 @@
         <p>{{ form.submit() }}</p>
     </form>
 
+</div>
     {% for question in questions %}
         {% include "_question.html" %}
     {% endfor %}
