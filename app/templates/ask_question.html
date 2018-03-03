@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.question_title.label }}<br>
+
+        {{ form.question_title(cols=80, rows=1) }}<br>
+        {{ form.question.label }}<br>
+        <div class="simpleMDE">
+            {{ form.question() }}<br>
+            {{ form.submit() }}<br>
+        </div>
+
+    <script>
+        var markdownEditor = new SimpleMDE(
+            { element: document.getElementById("{{ form.question.id }}"),
+            placeholder: "enter details here...",});
+
+    </script>
+        {% for error in form.question.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+</form>
+{% endblock %}

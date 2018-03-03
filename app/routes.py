@@ -52,6 +52,28 @@ def index():
             form=form,
             answers=answers)
 
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/ask_question', methods=['GET', 'POST'])
+@login_required
+def ask_question():
+
+    form = AskQuestionForm() # may need to be q and a form
+    if form.validate_on_submit():
+        question = Question(
+                body=form.question.data,
+                title=form.question_title.data,
+                author=current_user)
+        db.session.add(question)
+        db.session.commit()
+        flash('Your question has been posted.')
+        return redirect(url_for('ask_question')) # keep refresh from resubmitting post req
+
+    return render_template(
+            'ask_question.html',
+            title='Ask Question',
+            form=form)
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
