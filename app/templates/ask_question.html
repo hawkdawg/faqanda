@@ -17,8 +17,11 @@
     <script>
         var markdownEditor = new SimpleMDE(
             { element: document.getElementById("{{ form.question.id }}"),
-            placeholder: "enter details here...",});
+            placeholder: "enter question details here...",
+            toolbarTips: true,
+            });
 
+        <!--markdownEditor.value("{{ form.question.id }}")-->
     </script>
         {% for error in form.question.errors %}
             <span style="color: red;">[{{ error }}]</span>
