@@ -5,7 +5,7 @@ from werkzeug.urls import url_parse
 from flask_login import login_user, current_user, logout_user, login_required
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, AskQuestionForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, EditFAQandAForm, AskQuestionForm
 from app.models import User, Question
 from app.email import send_password_reset_email
 
@@ -145,7 +145,6 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
 
-
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if current_user.is_authenticated:
@@ -161,6 +160,7 @@ def reset_password_request():
                            title='Reset Password', form=form)
 from app.forms import ResetPasswordForm
 
+
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
@@ -175,3 +175,21 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
+
+@app.route('/edit_faqanda/<question_id>', methods=['GET', 'POST'])
+@login_required
+def edit_faqanda(question_id):
+    form = EditFAQandAForm()
+    if form.validate_on_submit():
+        question = Question(
+                title=form.question_title.data,
+                body=form.question.data,
+                author=current_user)
+        db.session.add(question)
+        db.session.commit()
+        flash('Your question has been posted.')
+    elif request.method == 'GET':
+        question = Question.query.filter_by(id=question_id).first()
+        form.question_title.data = question.title
+        form.question.data = question.body
+    return render_template('edit_faqanda.html', title='Edit FAQandA', form=form)

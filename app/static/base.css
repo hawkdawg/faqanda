@@ -1,4 +1,5 @@
-.simpleMDE{
-	height: 200px;
-}
+.CodeMirror, .CodeMirror-scroll {
+	min-height: 300px;
+	height: auto;
 
+}

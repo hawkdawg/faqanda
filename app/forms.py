@@ -52,6 +52,20 @@ class EditProfileForm(FlaskForm):
     about_me = TextAreaField('About me', validators=[Length(min=0, max=240)])
     submit = SubmitField('Submit')
 
+class EditFAQandAForm(FlaskForm):
+    '''This form will be able to edit Q and A's'''
+    question_title = TextAreaField(
+            'Question Title',
+            validators=[
+                    DataRequired(),
+                    Length(min=6, max=140)])
+    question = TextAreaField(
+            'Question',
+            validators=[
+                    DataRequired(),
+                    Length(min=8)])
+    submit = SubmitField('Submit')
+
 
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -66,10 +80,9 @@ class ResetPasswordForm(FlaskForm):
 
 
 class AskQuestionForm(FlaskForm):
-    question_title = TextAreaField(
+    question_title = StringField(
             'Question Title',
-            validators=[
-                    DataRequired(),
+            validators=[DataRequired(),
                     Length(min=6, max=140)])
     question = TextAreaField(
             'Question',
