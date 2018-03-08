@@ -136,10 +136,5 @@ class Tag(db.Model):
 #class Answer(db.Model):
 #    pass
 #
-#class AnswerDetail(db.Model):
-#    pass
-#
-#class AnswerComment(db.Model):
-#    pass
 
 

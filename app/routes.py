@@ -184,11 +184,11 @@ def edit_faqanda(question_id):
     if form.validate_on_submit():
         question.title=form.question_title.data
         question.body=form.question.data
-        question.author=current_user
         question.id=question_id
+        question.date=datetime.utcnow()
         db.session.add(question)
         db.session.commit()
-        flash('Your question has been posted.')
+        flash('FAQandA has been edited.')
 
         return redirect(
                 url_for('edit_faqanda', question_id=question_id))
