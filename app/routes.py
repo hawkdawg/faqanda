@@ -180,14 +180,18 @@ def reset_password(token):
 @login_required
 def edit_faqanda(question_id):
     form = EditFAQandAForm()
+    question = Question.query.filter_by(id=question_id).first_or_404()
     if form.validate_on_submit():
-        question = Question(
-                title=form.question_title.data,
-                body=form.question.data,
-                author=current_user)
+        question.title=form.question_title.data
+        question.body=form.question.data
+        question.author=current_user
+        question.id=question_id
         db.session.add(question)
         db.session.commit()
         flash('Your question has been posted.')
+
+        return redirect(
+                url_for('edit_faqanda', question_id=question_id))
     elif request.method == 'GET':
         question = Question.query.filter_by(id=question_id).first()
         form.question_title.data = question.title
