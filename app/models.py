@@ -19,11 +19,8 @@ class User(UserMixin, db.Model):
             'Question',
             backref='author',
             lazy='dynamic')
-    question_comments = db.relationship(
-            'QuestionComment',
-            backref='author',
-            lazy='dynamic')
     about_me = db.Column(db.String(240))
+    deleted = db.Column(db.Boolean, default=False)
     last_visited = db.Column(db.DateTime, default=datetime.utcnow)
 
     def set_password(self, password):
@@ -75,17 +72,17 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    deleted = db.Column(db.Integer)
+    deleted = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     body = db.Column(db.CLOB)
-    question_comments = db.relationship(
-            'QuestionComment',
-            backref='comments',
-            lazy='dynamic')
     tags = db.relationship(
             'Tag',
             secondary=QuestionTag,
             backref=db.backref('Question', lazy='dynamic'),
+            lazy='dynamic')
+    answers = db.relationship(
+            'Answer',
+            backref='question',
             lazy='dynamic')
 
     def __repr__(self):
@@ -107,22 +104,11 @@ class Question(db.Model):
     def get_recent_questions(limit):
         return Question.query.order_by(Question.date.desc()).limit(limit).all()
 
-class QuestionComment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    q_id = db.Column(db.Integer, db.ForeignKey('question.id'))
-    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    deleted = db.Column(db.Integer)
-    body = db.Column(db.String(500))  # TODO determine best size
-
-    def __repr__(self):
-        return '<Question Comment> {} - {}'.format(self.qc_id, self.body)
-
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
-    deleted = db.Column(db.Integer)
+    deleted = db.Column(db.Boolean, default=False)
     questions = db.relationship(
             'Question',
             secondary=QuestionTag,
@@ -132,9 +118,12 @@ class Tag(db.Model):
     def __repr__(self):
         return '<Tag Name> {}'.format(self.name)
 
-#
-#class Answer(db.Model):
-#    pass
-#
 
-
+class Answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    deleted = db.Column(db.Boolean, default=False)
+    choosen = db.Column(db.Boolean, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
+    body = db.Column(db.CLOB)
