@@ -10,18 +10,23 @@
             {% for error in form.question.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-
         </p>
-        <div class="simpleMDE">
             {{ form.question() }}<br>
             {% for error in form.question.errors %}
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
+        <p>
+        <strong>Answer:</strong><br>
+            {{ form.answers(cols=100, rows=10) }}<br>
+            {% for error in form.answers.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
             <div>
                 {{ form.submit() }}<br>
             </div>
 
-        </div>
 
 
     <script>

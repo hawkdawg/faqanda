@@ -9,10 +9,9 @@
 
         {{ form.question_title(cols=80, rows=1) }}<br>
         {{ form.question.label }}<br>
-        <div class="simpleMDE">
-            {{ form.question() }}<br>
-            {{ form.submit() }}<br>
-        </div>
+        {{ form.question() }}<br>
+        {{ form.answers }}<br>
+        {{ form.submit() }}<br>
 
     <script>
         var markdownEditor = new SimpleMDE(

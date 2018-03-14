@@ -64,6 +64,12 @@ class EditFAQandAForm(FlaskForm):
             validators=[
                     DataRequired(),
                     Length(min=8)])
+    answers = TextAreaField(
+            'Answers',
+            validators=[
+                    DataRequired(),
+                    Length(min=8)])
+
     submit = SubmitField('Submit')
 
 
@@ -82,12 +88,21 @@ class ResetPasswordForm(FlaskForm):
 class AskQuestionForm(FlaskForm):
     question_title = StringField(
             'Question Title',
-            validators=[DataRequired(),
+            validators=[
+                    DataRequired(),
                     Length(min=6, max=140)])
     question = TextAreaField(
             'Question',
             validators=[
                     DataRequired(),
                     Length(min=8)])
+
+    answer = TextAreaField(
+            'Answer',
+            validators=[
+                    DataRequired(),
+                    Length(min=8)])
+
+
     submit = SubmitField('Submit')
 

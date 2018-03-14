@@ -17,7 +17,6 @@ login = LoginManager(app)
 login.login_view = 'login'
 mail = Mail(app)
 
-
 if not app.debug and app.config['EMAIL_FAILURES'] is 1:
     if app.config['MAIL_SERVER']:
         auth = None

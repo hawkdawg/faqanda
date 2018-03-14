@@ -5,6 +5,17 @@
 
 <br>
     {% for question in questions %}
-        {% include "_question.html" %}
+        {% include "_faqanda.html" %}
     {% endfor %}
+
+
+    <script>
+        var markdownEditor = new SimpleMDE(
+            { element: document.getElementById("q_body"),
+            toolbar: false,
+
+            });
+        markdownEditor.togglePreview();
+    </script>
+
 {% endblock %}

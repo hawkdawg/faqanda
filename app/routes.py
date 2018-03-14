@@ -35,22 +35,11 @@ def index():
 
     questions = Question.get_recent_questions(limit=100)
 
-    answers = [
-            {
-                'author': {'username': 'beanie'},
-                'body': 'You chase tennis balls.'
-            },
-            {
-                'author': {'username': 'beanie'},
-                'body': 'To chase.'
-            }
-    ]
     return render_template(
             'index.html',
             title='Home',
             questions=questions,
-            form=form,
-            answers=answers)
+            form=form)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/ask_question', methods=['GET', 'POST'])
