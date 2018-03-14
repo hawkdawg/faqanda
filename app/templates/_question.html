@@ -14,6 +14,11 @@
                     </b>{{ question.title }}
                 </a><br>
                     <b>the details:</b>{{ question.body }}
+                </a><br>
+                {% for answer in question.answers %}
+                    <b>answers:</b>{{ answer }}
+                {% endfor %}
+
                 <hr>
             </td>
         </tr>
