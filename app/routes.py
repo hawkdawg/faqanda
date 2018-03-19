@@ -71,11 +71,10 @@ def ask_question():
         db.session.commit()
 
         answer = Answer(date=datetime.utcnow(),
-                user_id=current_user,
+                user_id=question.user_id,
                 body=form.answer.data,
                 question_id=question.id)
 
-        import ipdb; ipdb.set_trace() # TODO REMOVE
         db.session.add(answer)
         db.session.commit()
 
