@@ -81,7 +81,7 @@ class Question(db.Model):
             backref=db.backref('Question', lazy='dynamic'),
             lazy='dynamic')
 
-    answers = db.relationship(
+    answer = db.relationship(
             'Answer',
             backref='question',
             lazy='dynamic')
@@ -108,8 +108,6 @@ class Question(db.Model):
     def get_recent_questions(limit):
         return Question.query.order_by(Question.date.desc()).limit(limit).all()
 
-    def get_answers(self):
-        return Answers.query.filter_by(question_id=self.id)
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -133,4 +131,8 @@ class Answer(db.Model):
     choosen = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     body = db.Column(db.CLOB)
+
+    def __repr__(self):
+        return '<Answer ID> {}'.format(self.id)
+
 
