@@ -89,5 +89,11 @@ class AskQuestionForm(FlaskForm):
             validators=[
                     DataRequired(),
                     Length(min=8)])
+    answer = TextAreaField(
+            'Answer',
+            validators=[
+                    DataRequired(),
+                    Length(min=8)])
+
     submit = SubmitField('Submit')
 

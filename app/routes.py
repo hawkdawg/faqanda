@@ -6,7 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, EditFAQandAForm, AskQuestionForm
-from app.models import User, Question
+from app.models import User, Question, Answer
 from app.email import send_password_reset_email
 
 @app.before_request
@@ -59,12 +59,26 @@ def ask_question():
 
     form = AskQuestionForm() # may need to be q and a form
     if form.validate_on_submit():
+
+
         question = Question(
                 body=form.question.data,
                 title=form.question_title.data,
                 author=current_user)
+
+
         db.session.add(question)
         db.session.commit()
+
+        answer = Answer(date=datetime.utcnow(),
+                user_id=current_user,
+                body=form.answer.data,
+                question_id=question.id)
+
+        import ipdb; ipdb.set_trace() # TODO REMOVE
+        db.session.add(answer)
+        db.session.commit()
+
         flash('Your question has been posted.')
         return redirect(url_for('ask_question')) # keep refresh from resubmitting post req
 

@@ -16,7 +16,7 @@
                     <b>the details:</b>{{ question.body }}
                 </a><br>
                 {% for answer in question.answers %}
-                    <b>answers:</b>{{ answer }}
+                    <div><b>answers:</b>{{ answer.body }}</div>
                 {% endfor %}
 
                 <hr>
