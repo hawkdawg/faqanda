@@ -10,15 +10,22 @@
         {{ form.question_title(cols=80, rows=1) }}<br>
         {{ form.question.label }}<br>
         {{ form.question }}<br>
-        {{ form.answer}}<br>
+        {{ form.answer }}<br>
         {{ form.submit() }}<br>
 
     <script>
-        var markdownEditor = new SimpleMDE(
+        var markdownEditorQuestion = new SimpleMDE(
             { element: document.getElementById("{{ form.question.id }}"),
             placeholder: "enter question details here...",
             toolbarTips: true,
             });
+
+        var markdownEditorAnswer = new SimpleMDE(
+            { element: document.getElementById("{{ form.answer.id }}"),
+            placeholder: "enter answer here...",
+            toolbarTips: true,
+            });
+
 
     </script>
         {% for error in form.question.errors %}

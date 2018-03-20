@@ -18,13 +18,13 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField(
             label='Username',
-            validators=[DataRequired(), Length(min=3, max=64)])
+            validators=[DataRequired(), Length(min=2, max=64)])
     email = StringField(
             label='Email',
             validators=[DataRequired(), Email()])
     password = PasswordField(
             label='Password',
-            validators=[DataRequired(), Length(min=4, max=64)])
+            validators=[DataRequired(), Length(min=3, max=64)])
     password2 = PasswordField(
             label='Repeat Password',
             validators=[DataRequired(), EqualTo('password')])
@@ -83,17 +83,17 @@ class AskQuestionForm(FlaskForm):
     question_title = StringField(
             'Question Title',
             validators=[DataRequired(),
-                    Length(min=6, max=140)])
+                    Length(min=2, max=140)])
     question = TextAreaField(
             'Question',
             validators=[
                     DataRequired(),
-                    Length(min=8)])
+                    Length(min=2)])
     answer = TextAreaField(
             'Answer',
             validators=[
                     DataRequired(),
-                    Length(min=8)])
+                    Length(min=2)])
 
     submit = SubmitField('Submit')
 
